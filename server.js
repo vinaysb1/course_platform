@@ -60,6 +60,23 @@ app.post('/add-course', (req, res) => {
   });
 });
 
+// GET endpoint to retrieve all courses
+app.get('/courses', (req, res) => {
+    const query = 'SELECT * FROM course';
+  
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('❌ Error fetching courses:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+  
+      res.status(200).json({
+        message: 'Courses retrieved successfully',
+        courses: results,
+      });
+    });
+  });
+
 // Start the Express server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
