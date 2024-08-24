@@ -111,6 +111,26 @@ app.put('/update-course/:id', (req, res) => {
       });
     });
   });
+
+  // DELETE endpoint to delete a course
+app.delete('/delete-course/:id', (req, res) => {
+    const { id } = req.params;
+  
+    const query = 'DELETE FROM course WHERE course_id = ?';
+  
+    connection.query(query, [id], (err, results) => {
+      if (err) {
+        console.error('❌ Error deleting course:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+  
+      if (results.affectedRows === 0) {
+        return res.status(404).json({ error: 'Course not found' });
+      }
+  
+      res.status(200).json({ message: 'Course deleted successfully' });
+    });
+  });
 // Start the Express server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
