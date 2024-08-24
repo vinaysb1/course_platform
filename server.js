@@ -77,6 +77,40 @@ app.get('/courses', (req, res) => {
     });
   });
 
+  // PUT endpoint to update an existing course
+app.put('/update-course/:id', (req, res) => {
+    const { id } = req.params;
+    const { course_name, course_duration, course_price } = req.body;
+  
+    // Validate request body
+    if (!course_name || !course_duration || !course_price) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+  
+    const query = 'UPDATE course SET course_name = ?, course_duration = ?, course_price = ? WHERE course_id = ?';
+    const values = [course_name, course_duration, course_price, id];
+  
+    connection.query(query, values, (err, results) => {
+      if (err) {
+        console.error('❌ Error updating course:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+  
+      if (results.affectedRows === 0) {
+        return res.status(404).json({ error: 'Course not found' });
+      }
+  
+      res.status(200).json({
+        message: 'Course updated successfully',
+        course: {
+          course_id: id,
+          course_name,
+          course_duration,
+          course_price,
+        },
+      });
+    });
+  });
 // Start the Express server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
