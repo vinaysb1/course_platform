@@ -1,4 +1,4 @@
-create database if not exists courses;
+
 
 create table if not exists course (
     course_id INT AUTO_INCREMENT PRIMARY KEY,
