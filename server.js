@@ -66,7 +66,7 @@ app.get('/courses', (req, res) => {
   
     connection.query(query, (err, results) => {
       if (err) {
-        console.error('❌ Error fetching courses:', err);
+        console.error('Error fetching courses:', err);
         return res.status(500).json({ error: 'Database error' });
       }
   
@@ -92,7 +92,7 @@ app.put('/update-course/:id', (req, res) => {
   
     connection.query(query, values, (err, results) => {
       if (err) {
-        console.error('❌ Error updating course:', err);
+        console.error('Error updating course:', err);
         return res.status(500).json({ error: 'Database error' });
       }
   
@@ -120,7 +120,7 @@ app.delete('/delete-course/:id', (req, res) => {
   
     connection.query(query, [id], (err, results) => {
       if (err) {
-        console.error('❌ Error deleting course:', err);
+        console.error(' Error deleting course:', err);
         return res.status(500).json({ error: 'Database error' });
       }
   
@@ -131,8 +131,9 @@ app.delete('/delete-course/:id', (req, res) => {
       res.status(200).json({ message: 'Course deleted successfully' });
     });
   });
+  
 // Start the Express server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(` Server is running on http://localhost:${PORT}`);
 });
